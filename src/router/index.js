@@ -8,20 +8,33 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: '',
+        component: () => import('../views/admin/Dashboard.vue'),
+        name: '控制台',
+        icon: 'dashboard'
+      },
+      {
+        // UserPosts will be rendered inside User's <router-view>
+        // when /user/:id/posts is matched
+        path: 'config',
+        component: () => import('../views/admin/Config.vue'),
+        name: '配置',
+        icon: 'setting'
+      }
+    ]
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/init',
+    name: 'init',
+    component: () => import('../views/Init.vue')
+  },
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
